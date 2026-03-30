@@ -1,58 +1,138 @@
 # YouTube Channel Audit Tool
 
-A small Python tool that checks YouTube channel metadata (description, banner, latest videos etc.) for multiple channels and writes a summary report to `youtube_channel_audit.xlsx`.
+## Overview
 
-## Features
-- Fetches channel data via YouTube Data API v3
-- Verifies descriptions for SEO keywords/hashtags
-- Checks latest upload video metadata for SEO
-- Produces styled Excel report
+This tool audits multiple YouTube channels using the YouTube Data API and generates an Excel report with SEO and channel insights.
 
-## Prerequisites
-- Python 3.9+
-- `venv` for virtual environment (recommended)
-- Google Cloud YouTube Data API key
+---
+
+## Requirements
+
+* Python 3.9+
+* A YouTube Data API v3 key
+
+---
 
 ## Setup
-1. Clone the repository
-   ```powershell
-   git clone https://github.com/lowbare3/youtube-tracker.git
-   cd youtube-tracker
-   ```
-2. Create and activate venv
-   ```powershell
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1
-   ```
-3. Install dependencies
-   ```powershell
-   pip install requests openpyxl python-dotenv
-   ```
-4. Create `.env` in project root with:
-   ```text
-   YOUTUBE_API_KEY=YOUR_API_KEY_HERE
-   ```
-5. Ensure `.gitignore` contains:
-   - `.env`
-   - `venv/`
-   - `__pycache__/`
-   - `*.pyc`
 
-## Usage
-```powershell
-python youtubeaudit.py
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/lowbare3/youtube-tracker.git
+cd youtube-tracker
 ```
 
-Output will be:
-- `youtube_channel_audit.xlsx`
+### 2. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+Activate it:
+
+* Windows (PowerShell):
+
+```bash
+.\venv\Scripts\Activate.ps1
+```
+
+* macOS / Linux:
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 4. Add your API key
+
+Create a `.env` file in the project root:
+
+```env
+YOUTUBE_API_KEY=YOUR_API_KEY_HERE
+```
+
+---
+
+## Usage
+
+Run the tool:
+
+```bash
+python main.py
+```
+
+---
+
+## Output
+
+After running, the script generates:
+
+```
+youtube_channel_audit.xlsx
+```
+
+This file contains:
+
+* Channel name + URL
+* Subscriber count
+* Video count
+* Description SEO score
+* Latest video SEO score
+
+---
 
 ## Configuration
-- Channels list is in `youtubeaudit.py` under `CHANNELS` (display name, id type, identifier).
-- SEO keywords are in `SEO_KEYWORDS`.
+
+### Channels
+
+Edit:
+
+```
+data/channels.py
+```
+
+Format:
+
+```python
+("Display Name", "handle" | "id", "identifier")
+```
+
+---
+
+### SEO Keywords
+
+Edit:
+
+```
+services/analyzer.py
+```
+
+---
 
 ## Notes
-- `python.terminal.useEnvFile` should be enabled in VS Code settings if using integrated terminal env injection.
-- If your API key is compromised, generate a new one in Google Cloud Console.
 
-## License
-MIT (or your preferred license)
+* Make sure your API key has **YouTube Data API v3 enabled**
+* `.env` should NOT be committed (add to `.gitignore`)
+* If requests fail, check API quota limits
+
+---
+
+## Run Checklist
+
+* [ ] API key added
+* [ ] Dependencies installed
+* [ ] Channels configured
+* [ ] Run `python main.py`
+
+---
+
+That’s it.
